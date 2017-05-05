@@ -1,0 +1,15 @@
+
+
+
+================================================================================
+
+Format for statistics output:
+
+Stats are output in plaintext as a CSV by the compressor, where each line
+corresponds to the state after a code has been output. The lines are formatted
+as follows, with all sizes measured in BITS:
+
+<step>,<last input size>,<last code size>,<total input size>,<total code size>,
+                <dictionary size>,<length of last dictionary entry added>
+
+This last field is 0 if no new entry was added.

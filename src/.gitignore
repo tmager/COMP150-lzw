@@ -1,0 +1,6 @@
+lzw
+
+.dir-locals.el
+
+UT_*
+!UT_*.cpp
