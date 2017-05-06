@@ -17,7 +17,8 @@ enum MODE {COMPRESS, EXTRACT};
 
 void usage(char *exec) {
     cerr << "Usage: " << exec
-         << " [-c] [-x] [-m MODE] [-w WIDTH] [-s STATS] [-o DEST] SRC\n";
+         << " [-c] [-x] [-m MODE] [-w WIDTH] "
+         << "[-s STATS] [-i STATS_FREQ] [-o DEST] SRC\n";
 }
 
 int main(int argc, char **argv) {
@@ -27,6 +28,7 @@ int main(int argc, char **argv) {
     string outfname = "";
     string compressor_name = "fs";
     string statsfname = "";
+    uint64_t stats_freq = 1;
     uint64_t width = 12;
 
     int i;
@@ -43,6 +45,8 @@ int main(int argc, char **argv) {
             std::istringstream(argv[++i]) >> width;
         } else if (string(argv[i]) == "-s") {
             statsfname = argv[++i];
+        } else if (string(argv[i]) == "-i") {
+            std::istringstream(argv[++i]) >> stats_freq;
         }
     }
 
@@ -75,7 +79,8 @@ int main(int argc, char **argv) {
     Compressor *C;
 
     if (compressor_name == "fs") {
-        C = new Compressor_fixed_static(infname, outfname, statsfname, width);
+        C = new Compressor_fixed_static(infname, outfname, statsfname,
+                                                            width, stats_freq);
     } else {
         cerr << "Allowed compressors are: fs\n";
         abort();

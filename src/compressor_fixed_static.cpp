@@ -18,9 +18,9 @@ Compressor_fixed_static::Compressor_fixed_static(std::string infname,
                                                  std::string outfname,
                                                  std::string statsfname,
                                                  int _symwidth,
-                                                 uint64_t _inbuf_size,
-                                                 uint64_t _log_step)
-    : Compressor(infname, outfname, statsfname, _inbuf_size, _log_step)
+                                                 uint64_t _log_step,
+                                                 uint64_t _inbuf_size)
+    : Compressor(infname, outfname, statsfname, _log_step, _inbuf_size)
     , symwidth(_symwidth)
 {
     if (symwidth > DICTIONARY_MAX_WIDTH) {

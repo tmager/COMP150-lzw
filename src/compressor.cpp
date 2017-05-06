@@ -4,9 +4,8 @@ using std::string;
 using std::ofstream;
 using std::vector;
 
-Compressor::Compressor(string infname, string outfname,
-                       string statsfname,
-                       uint64_t _inbuf_size, uint64_t _log_step)
+Compressor::Compressor(string infname, string outfname, string statsfname,
+                                    uint64_t _log_step, uint64_t _inbuf_size)
     : infs   (infname,    std::ios::in  | std::ios::binary)
     , outfs  (outfname,   std::ios::out | std::ios::binary)
     , inbuf_size (_inbuf_size)

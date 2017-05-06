@@ -14,8 +14,8 @@ public:
     Compressor(std::string infname,
                std::string outfname,
                std::string statsfname,
-               uint64_t _inbuf_size = 32 * 1024,
-               uint64_t _log_step = 1);
+               uint64_t _log_step = 1,
+               uint64_t _inbuf_size = 32 * 1024);
 
     virtual ~Compressor();
 

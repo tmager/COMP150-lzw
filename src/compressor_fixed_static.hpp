@@ -8,8 +8,8 @@ public:
                             std::string outfname,
                             std::string statsfname,
                             int _symwidth,
-                            uint64_t _inbuf_size = 32 * 1024,
-                            uint64_t _log_step = 1);
+                            uint64_t _log_step = 1,
+                            uint64_t _inbuf_size = 32 * 1024);
     ~Compressor_fixed_static();
 
 protected:
