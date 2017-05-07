@@ -1,0 +1,59 @@
+:root {
+    --nav-width: 200px;
+}
+
+
+body {
+    font-family: sans-serif,Verdana;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+.inherit {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.main {
+    margin-left: var(--nav-width);
+    padding: 10px 16px;
+}
+
+.header {
+    background-color: #AACCFF;
+    width: 100%;
+    padding: 2px 16px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.14), 0 2px 10px 0 rgba(0,0,0,0.08);
+}
+
+/******************************************************************************/
+/* Nav-bar styles */
+
+ul.nav {
+    list-style-type: none;
+    background-color: #AACCFF;
+    margin: 0;
+    padding: 0;
+    width: var(--nav-width);
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    box-shadow: 2px 0 3px 0 rgba(0,0,0,0.14), 2px 0 10px 0 rgba(0,0,0,0.08);
+    line-height: 1.1;
+}
+
+ul.nav li a {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+ul.nav li a:hover {
+    background-color: #99BBFF;
+}
+
+ul.nav li a.activePage {
+    background-color: #0033AA;
+    color: white;
+}
