@@ -7,21 +7,154 @@
     <h1><a href="index.html" class="inherit">LZW Compression</a></h1>
     <h4>Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
   </div>
-  
-  <ul class="nav">
-    <li><a href="index.html"  class="inherit">   Home</a></li>
-    <li><a href="source.html" class="activePage">Obtaining the Source Code</a></li>
-  </ul>
+
+  <nav class="vertical">
+    <ul>
+      <li><a href="index.html" class="inherit">
+          Home
+      </a></li>
+      <li><a href="modes.html"  class="inherit">Compression Modes</a></li>
+      <li><a href="source.html" class="activePage">Obtaining & Using the Compressor</a></li>
+    </ul>
+  </nav>
 
   <div class="main">
+    <a id="SourceCode">
+      <h3>Obtaining the Source Code</h3>
+    </a>
+
     <p>
       The source code for the compressor, and the data analysis code, are
       available on
-      GitHub <a href="https://github.com/tmager/COMP150-lzw">here</a>. The
-      compressor requires a C++ compiler; it has been tested with GCC 6.3 and
-      Clang 4.0, but should compile correctly on GCC 5. The analysis code requires
-      Wolfram Mathematica, and has at present only been tested on Mathematica 11.
+      GitHub <a href="https://github.com/tmager/COMP150-lzw">here</a>. Building
+      the compressor requires a C++ compiler; it has been tested with GCC 6.3
+      and Clang 4.0, but should compile correctly on GCC 5. The analysis code
+      requires Wolfram Mathematica, and at present has only been tested on
+      Mathematica 11.
     </p>
+
+    <p>
+      Once the source code has been acquired, move into the <kbd>src</kbd>
+      directory and run <kbd>make</kbd>. This will create the <kbd>lzw</kbd>
+      executable.
+    </p>
+
+    <a id="Options">
+      <h3>Invocation and Options</h3>
+    </a>
+    
+    <p>
+      The <kbd>lzw</kbd> program should be invoked as follows:
+      <div style="margin-left: 2em; margin-top: -.4em; margin-bottom: .6em">
+        <kbd><b>lzw</b> [<i>OPTION</i>] <i>INFILE</i></kbd>
+      </div>
+      with the file being compressed or decompressed as <kbd>INFILE</kbd>. The
+      possible options are:
+      <ul class="options" style="margin-top: .1em">
+        <li><span><kbd><b>-c</b></kbd></span>
+          Compress mode; mutually exclusive with <kbd>-x</kbd>, with the last
+          one to appear taking precedence. If neither is specified <kbd>-c</kbd>
+          is taken to be the default.
+        </li>
+
+        <li><kbd><b>-i LOG_INTERVAL</b></kbd>
+          <div>
+            If compression statistics are being collected with the <kbd>-s</kbd>
+            flag, sets the interval, in number of codes output, at which these
+            statistics are stored. Defaults to 1.
+          </div>
+        </li>                
+
+        <li><kbd><b>-m COMPRESSOR_MODE</b></kbd>
+          <div>
+            Sets the compression mode; see the <a href="modes.html">modes
+            list</a> for allowed settings and what they do. This option must be
+            set the same way when decompressing a file as it was when the file
+            was compressed. Defaults to <kbd>fs</kbd>.
+          </div>
+        </li>        
+        
+        <li><kbd><b>-o OUTPUT_FILE</b></kbd>
+          <div>
+            Specify file name of output. By default, when compressing this is
+            the input file name with the compressor mode being used appended to
+            it as an extension. When extracting, if such an extension is present
+            it removes it and uses this as the filename; if not, it defaults to
+            the input filename with <kbd>.extr_</kbd> and then the compressor
+            mode as an extension.
+          </div>
+        </li>
+
+        <li><kbd><b>-s STATS_FILE</b></kbd>
+          <div>
+            Specify a file to write compression statistics. Has no effect
+            if <kbd>-x</kbd> is set. If this option is not used, compression
+            statistics are ignored.
+          </div>
+        </li>
+
+        <li><kbd><b>-w WIDTH</b></kbd>
+          <div>
+            Set the maximum code width for the compressor, in
+            bits. <kbd>WIDTH</kbd> must be at least 9 and not more than 63. If
+            unspecified, defaults to 12 bits. Must be set the same way when
+            decompressing as when compressing.
+          </div>
+        </li>
+        
+        <li><span><kbd><b>-x</b></kbd></span>
+          Extract mode; mutually exclusive with <kbd>-c</kbd>, with the last one
+          to appear taking precedence.
+        </li>
+      </ul>
+    </p>
+
+    <h3>Statistics File Format</h3>
+    
+    <p>
+      The files generated with the <kbd>-s</kbd> flag above during compression
+      are normal ASCII comma-separated values files. Each line corresponds to
+      the state of the compressor after emitting a code. Note that in general
+      all sizes are measured in bits. The columns represent, in order:
+
+      <ul>
+        <li>
+          Step: the number of codes that have been emitted so far. Note that
+          this is not the position in the input file, and for modes with
+          variable-width codes it doesn't correspond to position in the output
+          file either.
+        </li>
+        <li>
+          Last input size: the number of bits represented by the code that was
+          just emitted. For instance, if the code represented a sequence of 4
+          characters, the last input size would be 32.
+        </li>
+        <li>
+          Last code size: the number of bits in the last code that was emitted.
+        </li>
+        <li>
+          Total input size: the total number of input bits that have been
+          compressed so far. If the statistics log interval is set to 1 (see
+          the <kbd>-i</kbd> option above), this should equal the sum of all of
+          the last input size entries so far.
+        </li>
+        <li>
+          Total output size: the total number of bits that have been output into
+          the compressed file so far. Again, if the statistics log interval is
+          1, this should be the sum of all last code size entries so far.
+        </li>
+        <li>
+          Dictionary size: the total number of entries in the dictionary so far,
+          including all of the initial dictionary entires.
+        </li>
+        <li>
+          Last dictionary entry size: the number of bits in the entry added to
+          the dictionary when emitting the current code, or zero if no entry was
+          added (for instance if the dictionary was full.
+        </li>
+      </ul>
+    </p>
+    
   </div>
 
   

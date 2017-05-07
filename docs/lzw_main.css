@@ -1,11 +1,13 @@
 :root {
     --nav-width: 200px;
+    --options-indent: 50px;
 }
 
 
 body {
     font-family: sans-serif,Verdana;
     line-height: 1.5;
+    text-rendering: optimizeLegibility;
     margin: 0;
     padding: 0;
 }
@@ -17,43 +19,68 @@ body {
 
 .main {
     margin-left: var(--nav-width);
-    padding: 10px 16px;
+    padding: 0px 28px;
 }
 
 .header {
     background-color: #AACCFF;
     width: 100%;
     padding: 2px 16px;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.14), 0 2px 10px 0 rgba(0,0,0,0.08);
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.14), 0 2px 10px 0 rgba(0,0,0,0.08);
+}
+
+/**/
+kbd {
+    font-size: 125%;
+}
+
+ul.options {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 2em;
+}
+
+ul.options li {
+    margin: .4em 0;
+}
+
+ul.options li span {
+    float: left;
+    width: var(--options-indent);
+}
+
+ul.options li > div {
+    margin-left: var(--options-indent);
 }
 
 /******************************************************************************/
 /* Nav-bar styles */
 
-ul.nav {
+nav.vertical ul {
+    border-radius: 6px;
     list-style-type: none;
     background-color: #AACCFF;
-    margin: 0;
+    margin: 12px 8px;
     padding: 0;
     width: var(--nav-width);
-    height: 100%;
     position: fixed;
     overflow: auto;
-    box-shadow: 2px 0 3px 0 rgba(0,0,0,0.14), 2px 0 10px 0 rgba(0,0,0,0.08);
+    box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.10), 2px 1px 10px 0 rgba(0,0,0,0.06);
     line-height: 1.1;
 }
 
-ul.nav li a {
+nav.vertical ul li a {
     display: block;
-    padding: 8px 16px;
+    padding: 8px 12px;
     text-decoration: none;
+    transition: all 0.1s ease-in-out;
 }
 
-ul.nav li a:hover {
+nav.vertical ul li a:hover {
     background-color: #99BBFF;
 }
 
-ul.nav li a.activePage {
-    background-color: #0033AA;
+nav.vertical ul li a.activePage {
+    background-color: #001177;
     color: white;
 }
