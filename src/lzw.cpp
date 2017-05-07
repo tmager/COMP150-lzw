@@ -17,8 +17,8 @@ enum MODE {COMPRESS, EXTRACT};
 
 void usage(char *exec) {
     cerr << "Usage: " << exec
-         << " [-c] [-x] [-m MODE] [-w WIDTH] "
-         << "[-s STATS] [-i STATS_FREQ] [-o DEST] SRC\n";
+         << " [-c] [-x] [-m MODE] [-w WIDTH]"
+         << " [-s STATS] [-i STATS_FREQ] [-o DEST] SRC\n";
 }
 
 int main(int argc, char **argv) {
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
                                                            == compressor_name) {
                 outfname = infname.substr(0,infname.find_last_of("."));
             } else {
-                outfname = infname + ".extr." + compressor_name;
+                outfname = infname + ".extr_" + compressor_name;
             }
             break;
         }

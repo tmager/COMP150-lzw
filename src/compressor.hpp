@@ -32,7 +32,7 @@ protected:
     uint64_t s_step, s_in, s_out;
 
     void log(uint64_t d_in, uint64_t d_out,
-             uint64_t dict_size, uint64_t entry_size);
+             uint64_t dict_size, uint64_t entry_size, bool forceWrite = false);
 
     virtual void _compress(std::vector<uint8_t> &input, BitSeq &output,
                                             Dictionary_Compress &dict)   = 0;

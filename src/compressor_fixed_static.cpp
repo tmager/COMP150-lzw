@@ -73,7 +73,8 @@ void Compressor_fixed_static::_compress(std::vector<uint8_t> &input,
                         ("Remaining characters have no predecessor in table");
     }
     output.append(code, symwidth);
-    log(8 * current.size(), symwidth, dict.size(), 0);
+    // Force statistics write for last character of file
+    log(8 * current.size(), symwidth, dict.size(), 0, true);
 
     // Add EOF marker to output
     if (!dict.getCode({EOF_MARKER, vector<uint8_t>()}, &code)) {

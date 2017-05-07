@@ -74,14 +74,14 @@ void Compressor::extract() {
 }
 
 void Compressor::log(uint64_t d_in, uint64_t d_out,
-                     uint64_t dict_size, uint64_t entry_size) {
+                     uint64_t dict_size, uint64_t entry_size, bool forceWrite) {
     if (log_step == 0) return;
 
     s_step++;
     s_in += d_in;
     s_out += d_out;
 
-    if (s_step % log_step == 0) {
+    if (s_step % log_step == 0 || forceWrite) {
         statsfs << s_step << ","
                 << d_in   << ","
                 << d_out  << ","
