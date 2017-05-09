@@ -1,4 +1,4 @@
-#include "compressor_fixed.hpp"
+#include "compressor_variable.hpp"
 
 #include <stdio.h>
 #include <iostream>
@@ -12,25 +12,28 @@
 #include "flags.hpp"
 
 using std::vector;
+using std::cerr;
 
-Compressor_Fixed::Compressor_Fixed(std::string infname,
+
+Compressor_Variable::Compressor_Variable(std::string infname,
                                    std::string outfname,
                                    std::string statsfname,
-                                   int _symwidth,
+                                   int _maxSymwidth,
                                    uint64_t _log_step,
                                    uint64_t _inbuf_size)
     : Compressor(infname, outfname, statsfname, _log_step, _inbuf_size)
-    , symwidth(_symwidth)
+    , symwidth(9)
+    , maxSymwidth(_maxSymwidth)
 {
-    if (symwidth > DICT_MAX_WIDTH) {
+    if (maxSymwidth > DICT_MAX_WIDTH) {
         throw std::runtime_error ("Dictionary symbols too wide");
     }
 }
 
-Compressor_Fixed::~Compressor_Fixed() { }
+Compressor_Variable::~Compressor_Variable() { }
 
 
-void Compressor_Fixed::_compress(std::vector<uint8_t> &input,
+void Compressor_Variable::_compress(std::vector<uint8_t> &input,
                                  BitSeq &output,
                                  Dictionary *dict) {
     uint64_t code, oldCode;
@@ -46,7 +49,7 @@ void Compressor_Fixed::_compress(std::vector<uint8_t> &input,
 
         // If current is not in dictionary, output it
         if (code == DICT_NOT_FOUND) {
-            code = dict->insertLocal(input[i], symwidth);
+            code = dict->insertLocal(input[i], maxSymwidth);
 
             output.append(oldCode, symwidth);
 #ifdef DEBUG_COMPRESS
@@ -56,6 +59,15 @@ void Compressor_Fixed::_compress(std::vector<uint8_t> &input,
 
             log(8 * currentSize, symwidth, dict->size(),
                 (code == DICT_NOINSERT ? 0 : 8 * currentSize + 8));
+
+            // See if we need to expand code width
+            if ((code >> symwidth) != 0) {
+#ifdef DEBUG_COMPRESS
+                cerr << "[CM] Expanding before " << std::hex << code << std::dec
+                          << "(" << input[i-1] << ")" << std::endl;
+#endif
+                symwidth++;
+            }
 
             // Reset position in dictionary to include character at end of
             // unrecognized sequence.
@@ -69,22 +81,14 @@ void Compressor_Fixed::_compress(std::vector<uint8_t> &input,
     }
 
     // Flush remaining string in current
-    // if (!dict.getCode({DATA, current}, &code)) {
-    //     throw std::runtime_error
-    //                     ("Remaining characters have no predecessor in table");
-    // }
     output.append(oldCode, symwidth);
     // Force statistics write for last character of file
     log(8 * currentSize, symwidth, dict->size(), 0, true);
 
-    // Add EOF marker to output
-    // if (!dict.getCode({EOF_MARKER, vector<uint8_t>()}, &code)) {
-    //     throw std::runtime_error ("Dictionary missing EOF entry");
-    // }
     output.append(dict->getEOF(), symwidth);
 }
 
-void Compressor_Fixed::_extract(BitSeq &input,
+void Compressor_Variable::_extract(BitSeq &input,
                                        std::vector<uint8_t> &output,
                                        Dictionary *dict)     {
     bool hitEOF = false;
@@ -105,7 +109,16 @@ void Compressor_Fixed::_extract(BitSeq &input,
         switch (entry.type) {
         case DATA:
             if (lastEntry.type == DATA) {
-                dict->insertLocalLastSymbol(entry.entry.back(), symwidth);
+                code = dict->insertLocalLastSymbol(entry.entry.back(),
+                                                   maxSymwidth);
+                if ((code + 1) >> symwidth != 0) {
+#ifdef DEBUG_EXTRACT
+                    cerr << "[EX] Expanding after "
+                         << std::hex << code << std::dec
+                         << "(" << entry.entry.front() << ")" << std::endl;
+#endif
+                    symwidth++;
+                }
             }
             for (auto it = entry.entry.rbegin();
                    it != entry.entry.rend(); ++it) {
@@ -132,11 +145,19 @@ void Compressor_Fixed::_extract(BitSeq &input,
                 output.push_back(*it);
             }
 
-            dict->insert(lastEntry.entry, symwidth);
+            code = dict->insert(lastEntry.entry, maxSymwidth);
+            // cerr << code << std::endl;
+            if ((code + 1) >> symwidth != 0) {
+#ifdef DEBUG_EXTRACT
+                cerr << "[EX] Expanding after " << std::hex << code << std::dec
+                          << "(" << lastEntry.entry.front() << ")" << std::endl;
+#endif
+                symwidth++;
+            }
             break;
 
         default:
-            std::cerr << "Got unexpected dictionary entry type\n";
+            cerr << "Got unexpected dictionary entry type\n";
         }
     }
 }

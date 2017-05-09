@@ -7,6 +7,7 @@
 
 #include "compressor.hpp"
 #include "compressor_fixed_static.hpp"
+#include "compressor_variable_static.hpp"
 
 using std::cout;
 using std::cerr;
@@ -79,8 +80,11 @@ int main(int argc, char **argv) {
     if (compressor_name == "fs") {
         C = new Compressor_Fixed_Static(infname, outfname, statsfname,
                                                             width, stats_freq);
+    } else if (compressor_name == "vs") {
+        C = new Compressor_Variable_Static(infname, outfname, statsfname,
+                                                            width, stats_freq);
     } else {
-        cerr << "Allowed compressors are: fs\n";
+        cerr << "Allowed compressors are: fs vs\n";
         abort();
     }
 

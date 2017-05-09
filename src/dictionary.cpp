@@ -8,7 +8,9 @@ Dictionary::Dictionary()
     , symDict(0,0,0,nullptr)
     , current(&symDict)
     , getSymLast(&symDict)
-{ initialize(); }
+{
+    initialize();
+}
 
 void Dictionary::initialize() {
     for (uint64_t i = 0; i < 0x100; i++) {
@@ -100,10 +102,10 @@ uint64_t Dictionary::insert(std::vector<uint8_t> syms, uint64_t w) {
     resetLocal();
     for (auto it = syms.rbegin(); it != --(syms.rend()); it++) {
         if (getCodeLocal(*it) == DICT_NOT_FOUND) {
+            std::cerr << *this;
             throw std::runtime_error
                             ("Attempted to insert orphan symbol sequence");
         }
-        std::cerr << *it << std::endl;
     }
     return insertLocal(syms.front(), w);
 }

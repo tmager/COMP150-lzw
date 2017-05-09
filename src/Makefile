@@ -10,8 +10,10 @@ all: tests lzw
 tests: $(TEST_OBJS)
 
 lzw: lzw.cpp utils.cpp trienode.cpp dictionaryentry.cpp bitseq.cpp \
-			compressor.cpp compressor_fixed.cpp compressor_fixed_static.cpp \
-			dictionary.cpp dictionary_static.cpp
+			compressor.cpp dictionary.cpp \
+			compressor_fixed.cpp compressor_fixed_static.cpp \
+			compressor_variable.cpp compressor_variable_static.cpp \
+			dictionary_static.cpp
 	$(CC) $(CFLAGS) $^ -o $@
 
 clean::

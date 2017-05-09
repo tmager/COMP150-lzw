@@ -58,7 +58,7 @@ void Compressor::compress() {
     _compress(input, output, dict);
 
     output.write(outfs);
-    std::cout << *dict;
+    // std::cout << *dict;
 }
 
 void Compressor::extract() {
@@ -70,7 +70,7 @@ void Compressor::extract() {
     _extract(input, output, dict);
 
     outfs.write(reinterpret_cast<const char*>(&output[0]), output.size());
-    std::cout << *dict;
+    // std::cout << *dict;
 }
 
 void Compressor::log(uint64_t d_in, uint64_t d_out,
