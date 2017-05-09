@@ -7,7 +7,7 @@
 #ifndef __DICTIONARYENTRY_HPP__
 #define __DICTIONARYENTRY_HPP__
 
-enum EntryType { DATA, EOF_MARKER, FLUSH_MARKER };
+enum EntryType { DATA, EOF_MARKER, NOT_FOUND };
 
 typedef struct {
     enum EntryType type;

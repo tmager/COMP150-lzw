@@ -53,24 +53,24 @@ void Compressor::compress() {
 
     BitSeq output;
 
-    Dictionary_Compress dict;
-    dict.initialize();
+    Dictionary *dict = _createDict();
 
     _compress(input, output, dict);
 
     output.write(outfs);
+    std::cout << *dict;
 }
 
 void Compressor::extract() {
     BitSeq input(infs);
     vector<uint8_t> output;
 
-    Dictionary_Extract dict;
-    dict.initialize();
+    Dictionary *dict = _createDict();
 
     _extract(input, output, dict);
 
     outfs.write(reinterpret_cast<const char*>(&output[0]), output.size());
+    std::cout << *dict;
 }
 
 void Compressor::log(uint64_t d_in, uint64_t d_out,

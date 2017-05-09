@@ -74,12 +74,10 @@ int main(int argc, char **argv) {
         }
     }
 
-
-
     Compressor *C;
 
     if (compressor_name == "fs") {
-        C = new Compressor_fixed_static(infname, outfname, statsfname,
+        C = new Compressor_Fixed_Static(infname, outfname, statsfname,
                                                             width, stats_freq);
     } else {
         cerr << "Allowed compressors are: fs\n";

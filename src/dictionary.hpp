@@ -1,79 +1,58 @@
 #include <stdint.h>
-
-#include <iostream>
+#include <limits.h>
 #include <vector>
-#include <unordered_map>
 
+#include "trienode.hpp"
 #include "dictionaryentry.hpp"
 
-#ifndef __DICTIONARY_HPP__
-#define __DICTIONARY_HPP__
+#ifndef __DICTIONARY_H__
+#define __DICTIONARY_H__
 
-#define DICTIONARY_MAX_WIDTH (63)
-#define DICTIONARY_NOINSERT (ULONG_MAX)
+#define DICT_MAX_WIDTH (63)
+#define DICT_NOINSERT (ULONG_MAX)
+#define DICT_NOT_FOUND (ULONG_MAX - 1)
 
 class Dictionary {
 public:
-    // Dictionary();
-    // ~Dictionary();
-
-    virtual uint64_t size() = 0;
-
-    virtual bool getEntry(uint64_t code, DictionaryEntry *entry) const = 0;
-    virtual bool getCode(const DictionaryEntry &entry,
-                                                uint64_t *code) const = 0;
-    uint64_t keyWidth();
-
-    uint64_t insert(const DictionaryEntry &entry, uint64_t w);
-    // virtual void replaceEntry(uint64_t code, const DictionaryEntry &entry);
-    // virtual void replaceCode(const DictionaryEntry &entry, uint64_t code);
-
-    void clear();
-
+    Dictionary();
     void initialize();
 
-protected:
+    uint64_t size();
+
+    uint64_t getCodeLocal(uint8_t sym);
+    DictionaryEntry getSymbols(uint64_t code);
+    uint64_t getEOF();
+    uint64_t insertLocal(uint8_t sym, uint64_t w);
+    uint64_t insertLocalLastSymbol(uint8_t sym, uint64_t w);
+    void resetLocal();
+
+    uint64_t insert(std::vector<uint8_t> syms, uint64_t w);
+
+    friend std::ostream &operator<<(std::ostream &os, Dictionary &d);
+
+private:
+    uint64_t elts;
     uint64_t nextFree;
-    virtual void rawInsert(const DictionaryEntry &entry, uint64_t code) = 0;
-    virtual void rawClear() = 0;
 
-private:
+    uint64_t eof_code;
+    TrieNode symDict;
+    std::vector<TrieNode *> codeDict;
 
+    TrieNode *current, *getSymLast;
+
+    void insertLocal_raw(uint8_t sym, uint64_t code);
+
+    void removeLeaf(TrieNode *n);
+
+    /* Defines the code replacement policy for the dictionary. Must return a
+     * pointer to the leaf node that will be removed by the next replace
+     * operation, or nullptr to indicate that no code should be replaced and the
+     * insertion should be ignored. Passed the root node initially. */
+    virtual TrieNode *nextToReplace(TrieNode *n) = 0;
+
+    /* Helper to define replacement policy. Called on each node every time it is
+     * accessed. */
+    virtual void updateAccessed(TrieNode *n) = 0;
 };
 
-class Dictionary_Compress : public Dictionary {
-public:
-    uint64_t size();
-
-    bool getEntry(uint64_t code, DictionaryEntry *entry) const;
-    bool getCode(const DictionaryEntry &entry, uint64_t *code) const;
-
-    // friend std::ostream &operator<<(std::ostream &os,
-    //                                 const Dictionary_Compress &d);
-
-private:
-    std::unordered_map<DictionaryEntry, uint64_t, DE_hash> entries;
-
-    void rawInsert(const DictionaryEntry &entry, uint64_t code);
-    void rawClear();
-};
-
-class Dictionary_Extract : public Dictionary {
-public:
-    uint64_t size();
-
-    bool getEntry(uint64_t code, DictionaryEntry *entry) const;
-    bool getCode(const DictionaryEntry &entry, uint64_t *code) const;
-
-    // friend std::ostream &operator<<(std::ostream &os,
-    //                                 const Dictionary_Extract &d);
-
-private:
-    std::vector<DictionaryEntry> entries;
-
-    void rawInsert(const DictionaryEntry &entry, uint64_t code);
-    void rawClear();
-};
-
-
-#endif /* __DICTIONARY_HPP__ */
+#endif /* __DICTIONARY_H__ */

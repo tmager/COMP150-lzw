@@ -1,133 +1,139 @@
 #include "dictionary.hpp"
 
 #include "utils.hpp"
-#include "flags.hpp"
 
-using std::cerr;
-using std::endl;
-using std::ios;
+Dictionary::Dictionary()
+    : elts(0)
+    , nextFree(0)
+    , symDict(0,0,0,nullptr)
+    , current(&symDict)
+    , getSymLast(&symDict)
+{ initialize(); }
 
 void Dictionary::initialize() {
-    nextFree = 0;
-    for (int i = 0; i < 0x100; i++) {
-        insert({DATA, std::vector<uint8_t>(1,i)}, DICTIONARY_MAX_WIDTH);
-    }
-    insert({EOF_MARKER,   std::vector<uint8_t>()}, DICTIONARY_MAX_WIDTH);
-    insert({FLUSH_MARKER, std::vector<uint8_t>()}, DICTIONARY_MAX_WIDTH);
-}
-
-uint64_t Dictionary::keyWidth() {
-    if (nextFree == 0) return 0;
-
-    uint64_t i = 0, j = nextFree - 1;
-    while (j > 0) {
-        j >>= 1;
-        i++;
-    }
-    return i;
-}
-
-uint64_t Dictionary::insert(const DictionaryEntry &entry, uint64_t w) {
-    if (nextFree >> w != 0) {
-#ifdef DEBUG_DICT
-        cerr << "[DICT] Failed to insert [" << toString(entry.entry)
-             << "], code too wide (would be " << nextFree << ")\n";
-#endif
-        return DICTIONARY_NOINSERT;
+    for (uint64_t i = 0; i < 0x100; i++) {
+        resetLocal();
+        insertLocal_raw(i, nextFree++);
     }
 
-    rawInsert(entry, nextFree);
-    return nextFree++;
+    eof_code = nextFree++;
+    // Add a space for the EOF code in the code dictionary
+    codeDict.push_back(nullptr);
+
+    resetLocal();
 }
 
-void Dictionary::clear() {
-    rawClear();
-    initialize();
+uint64_t Dictionary::size() {
+    return elts;
 }
 
-
-
-
-
-uint64_t Dictionary_Compress::size() {
-    return entries.size();
-}
-
-uint64_t Dictionary_Extract::size() {
-    return entries.size();
-}
-
-
-bool Dictionary_Compress::getEntry(uint64_t code,
-                                   DictionaryEntry *entry) const {
-    (void)code;
-    (void)entry;
-
-    cerr << "[ERR] Unimplemented: Dictionary_Compress::getEntry "
-         << __FILE__ << " " << __LINE__ << endl;
-    return false;
-}
-
-bool Dictionary_Extract::getEntry(uint64_t code,
-                                   DictionaryEntry *entry) const {
-    if (code >= nextFree) {
-        return false;
-    }
-
-    *entry = entries.at(code);
-    return true;
-}
-
-bool Dictionary_Compress::getCode(const DictionaryEntry &entry,
-                                 uint64_t *code) const {
-    auto k = entries.find(entry);
-    if (k != entries.cend()) {
-        *code = k->second;
-        return true;
+uint64_t Dictionary::getCodeLocal(uint8_t sym) {
+    TrieNode *n = current->getChild(sym);
+    if (n == nullptr) {
+        return DICT_NOT_FOUND;
     } else {
-        return false;
+        current = n;
+        updateAccessed(n);
+        return n->getCode();
     }
 }
 
-bool Dictionary_Extract::getCode(const DictionaryEntry &entry,
-                                 uint64_t *code) const {
-    (void)code;
-    (void)entry;
-
-    cerr << "[ERR] Unimplemented: Dictionary_Compress::getEntry "
-         << __FILE__ << " " << __LINE__ << endl;
-    return false;
-}
-
-void Dictionary_Compress::rawInsert(const DictionaryEntry &entry,
-                                    uint64_t code) {
-#ifdef DEBUG_DICT
-        cerr << "[DICT] Inserting [" << toString(entry.entry)
-             << "] : " << code << endl;
-#endif
-
-    entries.insert({entry, code});
-}
-
-
-void Dictionary_Extract::rawInsert(const DictionaryEntry &entry,
-                                   uint64_t code) {
-#ifdef DEBUG_DICT
-        cerr << "[DICT] Inserting " << code
-             << " : [" << toString(entry.entry) << "]"  << endl;
-#endif
-    if (code != entries.size()) {
-        cerr << "Attempted to insert non-contiguous key in dictionary.\n";
-        abort();
+DictionaryEntry Dictionary::getSymbols(uint64_t code) {
+    if (code >= codeDict.size()) {
+        return { NOT_FOUND, std::vector<uint8_t>() };
     }
 
-    entries.push_back(entry);
+    TrieNode *n = codeDict.at(code);
+    if (n == nullptr) {
+        if (code == eof_code) {
+            return { EOF_MARKER, std::vector<uint8_t>() };
+        } else {
+            return { NOT_FOUND, std::vector<uint8_t>() };
+        }
+    } else {
+        getSymLast = current;
+        current = n;
+        std::vector<uint8_t> syms;
+        while (n->getParent() != nullptr) {
+            syms.push_back(n->getSymbol());
+            n = n->getParent();
+        }
+        return { DATA, syms };
+    }
 }
 
-void Dictionary_Compress::rawClear() {
-    entries.clear();
+uint64_t Dictionary::getEOF() {
+    return eof_code;
 }
 
-void Dictionary_Extract::rawClear() {
-    entries.clear();
+uint64_t Dictionary::insertLocal(uint8_t sym, uint64_t w) {
+    uint64_t code;
+    if ((nextFree >> w) == 0) {
+        code = nextFree++;
+    } else {
+        TrieNode *toReplace = nextToReplace(&symDict);
+        if (toReplace == nullptr) {
+            return DICT_NOINSERT;
+        }
+        code = toReplace->getCode();
+        removeLeaf(toReplace);
+    }
+    insertLocal_raw(sym, code);
+    updateAccessed(current);
+    return code;
+}
+
+uint64_t Dictionary::insertLocalLastSymbol(uint8_t sym, uint64_t w) {
+    uint64_t code;
+    TrieNode *_current = current;
+    current = getSymLast;
+    code = insertLocal(sym, w);
+    current = _current;
+    return code;
+}
+
+void Dictionary::resetLocal() {
+    current = &symDict;
+}
+
+uint64_t Dictionary::insert(std::vector<uint8_t> syms, uint64_t w) {
+    resetLocal();
+    for (auto it = syms.rbegin(); it != --(syms.rend()); it++) {
+        if (getCodeLocal(*it) == DICT_NOT_FOUND) {
+            throw std::runtime_error
+                            ("Attempted to insert orphan symbol sequence");
+        }
+        std::cerr << *it << std::endl;
+    }
+    return insertLocal(syms.front(), w);
+}
+
+void Dictionary::insertLocal_raw(uint8_t sym, uint64_t code) {
+    TrieNode *n = new TrieNode(sym, code, 0, current);
+    current->addChild(n);
+    current = n;
+    if (code == codeDict.size()) {
+        codeDict.push_back(n);
+    } else {
+        codeDict.at(code) = n;
+    }
+}
+
+void Dictionary::removeLeaf(TrieNode *n) {
+    n->getParent()->removeChild(n->getSymbol());
+}
+
+
+std::ostream &operator<<(std::ostream &os, Dictionary &d) {
+    for (uint64_t i = 0; i < d.codeDict.size(); i++) {
+        if (d.codeDict.at(i) == nullptr) {
+            if (i == d.eof_code) {
+                os << std::hex << i << std::dec << " : [EOF]\n";
+            }
+        } else {
+            os << std::hex << i << std::dec <<
+                " : " << toStringReverse(d.getSymbols(i).entry) << std::endl;
+        }
+    }
+    return os;
 }

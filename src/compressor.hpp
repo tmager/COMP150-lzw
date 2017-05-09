@@ -34,10 +34,12 @@ protected:
     void log(uint64_t d_in, uint64_t d_out,
              uint64_t dict_size, uint64_t entry_size, bool forceWrite = false);
 
+    virtual Dictionary *_createDict() = 0;
+
     virtual void _compress(std::vector<uint8_t> &input, BitSeq &output,
-                                            Dictionary_Compress &dict)   = 0;
+                                            Dictionary *dict)    = 0;
     virtual void _extract(BitSeq &input, std::vector<uint8_t> &output,
-                                            Dictionary_Extract &dict)    = 0;
+                                            Dictionary *dict)    = 0;
 };
 
 

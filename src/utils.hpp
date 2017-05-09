@@ -10,5 +10,6 @@
 #define __UTILS_HPP__
 
 std::string toString(std::vector<uint8_t> vect);
+std::string toStringReverse(std::vector<uint8_t> vect);
 
 #endif /* __UTILS_HPP__ */
