@@ -1,8 +1,9 @@
-# COMP150-lzw
-### Tufts University COMP150
-### Algorithms + Data Structures (Spring 2017) -- Final Project
+## COMP150-lzw
+Tufts University COMP150 Algorithms + Data Structures (Spring 2017) -- Final Project
 
-### Tom Magerlein
+Tom Magerlein
+
+---
 
 Background information is available at
 [https://tmager.github.io/COMP150-lzw/](https://tmager.github.io/COMP150-lzw/),
