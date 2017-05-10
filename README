@@ -1,15 +1,11 @@
+# COMP150-lzw
+### Tufts University COMP150
+### Algorithms + Data Structures (Spring 2017) -- Final Project
 
+### Tom Magerlein
 
-
-================================================================================
-
-Format for statistics output:
-
-Stats are output in plaintext as a CSV by the compressor, where each line
-corresponds to the state after a code has been output. The lines are formatted
-as follows, with all sizes measured in BITS:
-
-<step>,<last input size>,<last code size>,<total input size>,<total code size>,
-                <dictionary size>,<length of last dictionary entry added>
-
-This last field is 0 if no new entry was added.
+Background information is available at
+[https://tmager.github.io/COMP150-lzw/](https://tmager.github.io/COMP150-lzw/),
+with documentation on the
+[Obtaining & Using the Compressor](https://tmager.github.io/COMP150-lzw/source.html)
+page.
