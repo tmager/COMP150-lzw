@@ -41,6 +41,8 @@
       notes on <a href="source.html#Options">running the compressor</a>), each
       has an abbreviation, given in parentheses below.
 
+      <!-- TODO: when lru/rlr are ready, mark as working -->
+
       <ul>
         <li>
           <b>Fixed code width, static dictionary</b> (<kbd>fs</kbd>): This is
@@ -63,7 +65,7 @@
           dictionary, but dictionary entries are replaced once the dictionary
           fills up. The entry that is replaced is the leaf which has gone the
           longest without being used. An entry is "used" whenever it is touched
-          by a search operation.
+          by a search operation. <em>Not working yet</em>
         </li>
         <li>
           <b>Variable code width, rotating leaf replacement</b>
@@ -72,7 +74,7 @@
           in order until it finds a leaf. The position that the search was at is
           maintained between replacements, ensuring that nodes are replaced
           throughout all of the leaves, not just the leaves near where the
-          search starts.
+          search starts. <em>Not working yet</em>
         </li>
       </ul>
     </p>
