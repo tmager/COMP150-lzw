@@ -10,27 +10,29 @@
 
   <nav class="vertical">
     <ul>
-      <li><a href="index.html" class="inherit">
-          Home
-      </a></li>
-      <li><a href="modes.html"  class="inherit">Compression Modes</a></li>
+      <li><a href="index.html" class="inherit">Home</a></li>
+      <li><a href="background-compression.html" class="inherit">Background: Lossless Data Compression</a></li>
+      <li><a href="background-lzw.html" class="inherit">Background: The&nbsp;LZW Algorithm</a></li>
+      <li><a href="impl.html"  class="inherit">Implementation & Compression Modes</a></li>
+      <li><a href="results.html" class="inherit">Data & Results</a></li>
       <li><a href="source.html" class="activePage">Obtaining & Using the Compressor</a></li>
+      <li><a href="analysistools.html" class="inherit">Use of Analysis Code</a></li>
     </ul>
   </nav>
 
   <div class="main">
-    <a id="SourceCode">
-      <h3>Obtaining the Source Code</h3>
-    </a>
+
+    <a id="SourceCode"></a>
+    <h3>Obtaining and Building the Source Code</h3>
 
     <p>
       The source code for the compressor, and the data analysis code, are
       available on
       GitHub <a href="https://github.com/tmager/COMP150-lzw">here</a>. Building
-      the compressor requires a C++ compiler; it has been tested with GCC 6.3
-      and Clang 4.0, but should compile correctly on GCC 5. The analysis code
-      requires Wolfram Mathematica, and at present has only been tested on
-      Mathematica 11.
+      the compressor requires <kbd>g++</kbd>; it has been tested with GCC 6.3,
+      but should compile correctly on GCC 5. The analysis code requires Wolfram
+      Mathematica, and has only been tested on Mathematica 11, though it should
+      work with any reasonably recent version.
     </p>
 
     <p>
@@ -39,9 +41,9 @@
       executable.
     </p>
 
-    <a id="Options">
-      <h3>Invocation and Options</h3>
-    </a>
+    <a id="Options"></a>
+    <h3>Invocation and Options</h3>
+    
     
     <p>
       The <kbd>lzw</kbd> program should be invoked as follows:
@@ -67,10 +69,11 @@
 
         <li><kbd><b>-m COMPRESSOR_MODE</b></kbd>
           <div>
-            Sets the compression mode; see the <a href="modes.html">modes
-            list</a> for allowed settings and what they do. This option must be
-            set the same way when decompressing a file as it was when the file
-            was compressed. Defaults to <kbd>fs</kbd>.
+            Sets the compression mode; see
+            the <a href="modes.html#CompressionModes">modes list</a> for allowed
+            settings and what they do. This option must be set the same way when
+            decompressing a file as it was when the file was
+            compressed. Defaults to <kbd>fs</kbd>.
           </div>
         </li>        
         
@@ -121,8 +124,8 @@
         <li>
           Step: the number of codes that have been emitted so far. Note that
           this is not the position in the input file, and for modes with
-          variable-width codes it doesn't correspond to position in the output
-          file either.
+          variable-width codes it doesn't directly correspond to position in the
+          output file either.
         </li>
         <li>
           Last input size: the number of bits represented by the code that was
@@ -154,7 +157,6 @@
         </li>
       </ul>
     </p>
-    
   </div>
 
   

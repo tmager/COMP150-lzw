@@ -1,0 +1,69 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="lzw_main.css">
+</head>
+
+<body>
+  <div class="header">
+    <h1><a href="index.html" class="inherit">LZW Compression</a></h1>
+    <h4>Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
+  </div>
+  
+  <nav class="vertical">
+    <ul>
+      <li><a href="index.html" class="inherit">Home</a></li>
+      <li><a href="background-compression.html" class="activePage">Background: Lossless Data Compression</a></li>
+      <li><a href="background-lzw.html" class="inherit">Background: The&nbsp;LZW Algorithm</a></li>
+      <li><a href="impl.html"  class="inherit">Implementation & Compression Modes</a></li>
+      <li><a href="results.html" class="inherit">Data & Results</a></li>
+      <li><a href="source.html" class="inherit">Obtaining & Using the Compressor</a></li>
+      <li><a href="analysistools.html" class="inherit">Use of Analysis Code</a></li>
+    </ul>
+  </nav>
+
+  <div class="main">
+    <h3>Lossless Data Compression</h3>
+    <p>
+      As the name would suggest, the objective of lossless data compression is
+      to take an input and represent it as succinctly as possible such that the
+      original data can be reconstructed perfectly based only on the compressed
+      data and knowledge of how it was compressed. In contrast, lossy data
+      compression attempts to reconstruct a good approximation to the original
+      input, allowing for a much greater degree of compression at the cost of
+      some accuracy; this type of compression is common in multimedia
+      applications, where the lost data is tiny details in an image or video
+      that are not easily visible.
+    </p>
+
+    <p>
+      In lossless compression, the main measure of effectiveness is the
+      compression ratio, which is the ratio of a file's uncompressed size to its
+      compressed size. Thus, a compression ratio of 1 means that the file is the
+      same size after compression as before, a compression ratio of 2 means that
+      it is half the original size after compression, and so on. The compression
+      ratio that a compressor can achieve depends greatly on the data being
+      compressed, but there exist various benchmarks (for
+      example <a href="http://www.maximumcompression.com/">Maximum
+      Compression</a>) which seek to measure compression utilities' compression
+      ratios on some approximation to real-world data.
+    </p>
+
+    <p>
+      The underlying reason that lossless data compression works is that most
+      files contain decidedly non-random data, and thus contain patterns which
+      can be used to represent the data in fewer bits. For example, the source
+      for this webpage is written in plain text, and each character is
+      represented as a byte. A byte can represent 256 distinct values, but there
+      are many fewer than 256 (indeed, fewer than 128) distinct characters in
+      the website source, so it is possible to uniquely represent each character
+      in less than a byte. The ways in which different compression algorithms
+      leverage this information vary greatly. If characters appear with
+      radically different frequencies in the input file, it is possible to
+      represent the more common ones with shorter sequences of bits than the
+      longer ones &mdash; this is the basis of Huffman coding. Alternatively, if
+      certain sequences of characters occur frequently, these sequences can (in
+      any of various ways) be stored just once, and then referenced when they
+      reappear &mdash; this is the basis of dictionary coders, including the
+      LZW algorithm.
+    </p>
+  </div>
+</body>
