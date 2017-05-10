@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <limits.h>
+#include <iostream>
 #include <vector>
 
 #include "trienode.hpp"
