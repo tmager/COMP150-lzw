@@ -10,6 +10,10 @@ static string sanitizeChar(uint8_t c) {
     switch (c) {
     case '\n':
         return "[\\n]";
+    case '\r':
+        return "[\\r]";
+    case '\t':
+        return "[\\t]";
     default:
         return "[" + std::to_string(c) + "]";
     }

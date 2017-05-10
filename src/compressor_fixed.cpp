@@ -61,7 +61,7 @@ void Compressor_Fixed::_compress(std::vector<uint8_t> &input,
             // unrecognized sequence.
             dict->resetLocal();
             oldCode = dict->getCodeLocal(input[i]);
-            currentSize = 0;
+            currentSize = 1;
         } else {
             oldCode = code;
             currentSize++;

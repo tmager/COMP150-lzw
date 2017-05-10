@@ -43,8 +43,6 @@ void Compressor_Variable::_compress(std::vector<uint8_t> &input,
     currentSize = 0;
 
     for (uint64_t i = 0; i < input.size(); i++) {
-        // std::cout << inbuf[i];
-
         code = dict->getCodeLocal(input[i]);
 
         // If current is not in dictionary, output it
@@ -61,7 +59,7 @@ void Compressor_Variable::_compress(std::vector<uint8_t> &input,
                 (code == DICT_NOINSERT ? 0 : 8 * currentSize + 8));
 
             // See if we need to expand code width
-            if ((code >> symwidth) != 0) {
+            if (code != DICT_NOINSERT && (code >> symwidth) != 0) {
 #ifdef DEBUG_COMPRESS
                 cerr << "[CM] Expanding before " << std::hex << code << std::dec
                           << "(" << input[i-1] << ")" << std::endl;
@@ -73,7 +71,7 @@ void Compressor_Variable::_compress(std::vector<uint8_t> &input,
             // unrecognized sequence.
             dict->resetLocal();
             oldCode = dict->getCodeLocal(input[i]);
-            currentSize = 0;
+            currentSize = 1;
         } else {
             oldCode = code;
             currentSize++;
@@ -92,6 +90,7 @@ void Compressor_Variable::_extract(BitSeq &input,
                                        std::vector<uint8_t> &output,
                                        Dictionary *dict)     {
     bool hitEOF = false;
+    bool inserting = true;
     uint64_t decodePos = 0;
     DictionaryEntry lastEntry = {NOT_FOUND, std::vector<uint8_t>()};
 
@@ -111,13 +110,18 @@ void Compressor_Variable::_extract(BitSeq &input,
             if (lastEntry.type == DATA) {
                 code = dict->insertLocalLastSymbol(entry.entry.back(),
                                                    maxSymwidth);
-                if ((code + 1) >> symwidth != 0) {
+                if (code == DICT_NOINSERT) {
+                    inserting = false;
+                } else if (inserting && (code + 1) >> symwidth != 0) {
 #ifdef DEBUG_EXTRACT
                     cerr << "[EX] Expanding after "
                          << std::hex << code << std::dec
                          << "(" << entry.entry.front() << ")" << std::endl;
 #endif
                     symwidth++;
+                    if (symwidth > maxSymwidth) {
+                        symwidth--;
+                    }
                 }
             }
             for (auto it = entry.entry.rbegin();
@@ -145,14 +149,21 @@ void Compressor_Variable::_extract(BitSeq &input,
                 output.push_back(*it);
             }
 
-            code = dict->insert(lastEntry.entry, maxSymwidth);
-            // cerr << code << std::endl;
-            if ((code + 1) >> symwidth != 0) {
+            if (inserting) {
+                code = dict->insert(lastEntry.entry, maxSymwidth);
+            }
+
+            if (code == DICT_NOINSERT) {
+                inserting = false;
+            } else if (inserting && (code + 1) >> symwidth != 0) {
 #ifdef DEBUG_EXTRACT
                 cerr << "[EX] Expanding after " << std::hex << code << std::dec
                           << "(" << lastEntry.entry.front() << ")" << std::endl;
 #endif
                 symwidth++;
+                if (symwidth > maxSymwidth) {
+                    symwidth--;
+                }
             }
             break;
 

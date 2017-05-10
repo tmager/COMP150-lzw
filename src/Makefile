@@ -1,7 +1,7 @@
-CC = clang++
+CC = g++
 LANG = -std=c++11
 CFLAGS_ADDL = 
-CFLAGS = $(LANG) $(CFLAGS_ADDL) -Wall -Wextra -Werror -g3 -O0
+CFLAGS = $(LANG) $(CFLAGS_ADDL) -Wall -Wextra -Werror -O3 -g3
 TESTS = $(wildcard UT_*.cpp)
 TEST_OBJS = $(patsubst %.cpp, %, $(TESTS))
 

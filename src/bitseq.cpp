@@ -26,7 +26,7 @@ BitSeq::BitSeq(std::istream &is) {
 
     data = std::vector<BitSeq_Block>(databuf,
                                      databuf + length / BLOCKSIZE);
-    
+
     delete[] databuf;
 }
 
@@ -87,10 +87,6 @@ void BitSeq::clear() {
 
 
 void BitSeq::write(std::ostream &os) const {
-    // if (length % BLOCKSIZE != 0) {
-    //     throw std::runtime_error ("Attempted to write non-byte-aligned block");
-    // }
-
     for (BitSeq_Block d : data) {
         os.write((char *)&d, sizeof(d));
     }

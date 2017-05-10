@@ -79,6 +79,7 @@ uint64_t Dictionary::insertLocal(uint8_t sym, uint64_t w) {
         }
         code = toReplace->getCode();
         removeLeaf(toReplace);
+        elts--;
     }
     insertLocal_raw(sym, code);
     updateAccessed(current);
@@ -119,6 +120,7 @@ void Dictionary::insertLocal_raw(uint8_t sym, uint64_t code) {
     } else {
         codeDict.at(code) = n;
     }
+    elts++;
 }
 
 void Dictionary::removeLeaf(TrieNode *n) {
