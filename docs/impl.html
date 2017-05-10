@@ -10,15 +10,31 @@
   
   <nav class="vertical">
     <ul>
-      <li><a href="index.html" class="inherit">
-          Home
-      </a></li>
+      <li><a href="index.html"  class="inherit">Home</a></li>
       <li><a href="impl.html"   class="activePage">Implementation & Compression Modes</a></li>
       <li><a href="source.html" class="inherit">Obtaining & Using the Compressor</a></li>
     </ul>
   </nav>
 
   <div class="main">
+    <h3>Implementation</h3>
+
+    <p>
+      All of the compression/decompression modes
+      (see <a href="#CompressionModes">below</a>) are implemented by
+      subclassing <kbd>Compressor</kbd> to provide the required low-level
+      compression implementation. Each class provides both compression and
+      decompression capabilities.
+
+      The compressor and decompressor use a dictionary implemented as a trie for
+      looking up the codes assigned to sequences of characters, combined with a
+      vector of pointers into the trie for looking up character sequences based
+      on codes.
+    </p>
+    
+    <a id="CompressionModes">
+      <h3>Compression Modes</h3>
+    </a>
     <p>
       The compressor has several compression modes, all of them variants on the
       basic LZW algorithm. For the purposes of specifying which to use (see
@@ -46,7 +62,17 @@
           (<kbd>lru</kbd>): Operates the same way as variable code width, static
           dictionary, but dictionary entries are replaced once the dictionary
           fills up. The entry that is replaced is the leaf which has gone the
-          longest without being used.
+          longest without being used. An entry is "used" whenever it is touched
+          by a search operation.
+        </li>
+        <li>
+          <b>Variable code width, rotating leaf replacement</b>
+          (<kbd>rlr</kbd>): Works like least-recently-used replacement, but the
+          entry to be replaced is selected from the leaves by searching the trie
+          in order until it finds a leaf. The position that the search was at is
+          maintained between replacements, ensuring that nodes are replaced
+          throughout all of the leaves, not just the leaves near where the
+          search starts.
         </li>
       </ul>
     </p>
