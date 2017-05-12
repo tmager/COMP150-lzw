@@ -42,10 +42,44 @@ body {
     color: inherit;
 }
 
+
+.grid {
+    display: grid;
+    
+    grid-gap: 10px;
+    background-color: #fff;
+    color: #444;
+}
+.grid > .left {
+    grid-column: 1 / 1;
+}
+.grid > .right {
+    grid-column: 2 / 2;
+}
+
 /**/
 kbd {
-    font-size: 125%;
+    font-family: Courier New, Courier;
+    font-size: 115%;
 }
+
+.dim {
+    color: #AAAAAA;
+}
+
+table.dict {
+    float: center;
+    width: 95%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+table.dict, table.dict th, table.dict td {
+    border: 1px solid black;
+    text-align: center;
+    font-family: Courier New, Courier;
+    font-weight: 600;
+}
+
 
 a:link {
     color: #000088;
@@ -88,7 +122,7 @@ nav.vertical ul {
     margin: 12px 8px;
     padding: 0;
     width: var(--nav-width);
-    position: fixed;
+    position: absolute;
     overflow: auto;
     box-shadow: 2px 2px 3px 0 rgba(0,0,0,0.10), 2px 1px 10px 0 rgba(0,0,0,0.06);
     line-height: 1.1;

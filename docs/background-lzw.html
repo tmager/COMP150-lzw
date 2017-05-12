@@ -35,13 +35,124 @@
 
     <p>
       As LZW is so closely related to the somewhat simpler LZ78 algorithm, it
-      worthwhile to understand how LZ78 works before moving on to LZW.
+      worthwhile to understand how LZ78 works before moving on to LZW. LZ78 is
+      based on a dictionary which maps binary codes to sequences of characters
+      and vice versa. This dictionary is initialized to include all 256 possible
+      characters, plus a code to indicate the end of the input file. As
+      compression progresses, new sequences are added to the the dictionary up
+      until it runs out of unique binary codes for these sequences that can be
+      represented in some number of bits (often 12). Once the dictionary is
+      full, no new entries are added, and compression continues using the (now
+      unchanging) dictionary.
     </p>
+
+    <p>
+      Compression with the LZ78 algorithm works as follows:
+      <ul>
+        <li>Find the longest prefix of the input that exists in the
+          dictionary.</li>
+        <li>Output the code corresponding to that prefix.</li>
+        <li>If this prefix ends at the end of the input, output the code for the
+          prefix followed by the end-of-file code and stop. Otherwise, output the
+          code corresponding to the next single character in the input.</li>
+        <li>Add the first prefix followed by the character just output to the
+          dictionary (if it isn't full), assigning this sequence the next
+          available code.</li>
+        <li>Move position in the input to after the single character that was
+          output and repeat.</li>
+      </ul>
+      Decompression simply reverses these steps:
+      <ul>
+        <li>Read the next two codes from the input. The second must represent a
+          single character, as can be seen from looking at the compression part
+          of the algorithm, unless the end of the file has been reached, in
+          which case there may only be one code, or the second one may be the
+          end-of-file code.</li>
+        <li>Output the character sequences in the dictionary that correspond to
+          these two codes.</li>
+        <li>Add the character sequence for the first code with the character for
+          the second code appended to it to the dictionary (if possible),
+          assigning this new sequence the next available code.</li>
+        <li>Repeat.</li>
+      </ul>
+    </p>
+
+    <p>
+      As an example to show how compression and decompression work, consider a
+      reduced alphabet with only 3 characters, <kbd>X</kbd>, <kbd>Y</kbd>,
+      and <kbd>Z</kbd>, and a dictionary of 16 entries (i.e. 4 bit codes),
+      represented by the 16 hexidecimal digits. The message being encoded will
+      be <br>
+
+      <kbd style="margin-left: 1cm"><b>XYZYZYXXYZXYZYYYYYYXYZY</b></kbd><br>
+
+      The operation of the compressor will be on the left, and the decompressor
+      on the right. The first line is the input, the next the output, and the
+      table shows the current state of the dictionary.
+    </p>
+    
+    <div class="grid">
+      <div class="left">
+        <kbd><b>X<span class="dim">YZYZYXXYZXYZYYYYYYXYZY</span></b></kbd><br>
+        <kbd><b>0<span class="dim">121504271119183</span></b></kbd><br>
+        <table class="dict">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td></td><td></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td></td><td></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td></td><td></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td></td><td></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td></td><td></td>
+          </tr>
+
+        </table>
+      </div>
+      <div class="right">
+        <kbd><b>0<span class="dim">121504271119183</span></b></kbd><br>
+        <kbd><b>X<span class="dim">YZYZYXXYZXYZYYYYYYXYZY</span></b></kbd><br>
+      </div>
+    </div>
+
+      
+    
+
+    <p>
+      LZW is a simple variant of LZ78: when a code is output, instead of then
+      outputting the code for the next single character in the input, it uses
+      the next character as the beginning of a new character sequence. When
+      compressing, this change is quite simple to implement. When decompressing,
+      however, there is a complication: when the decompressor receives a code,
+      what does it add to the dictionary? In most cases, it can simply read the
+      next code, then add the sequence corresponding to the previous code
+      followed by the first character of the new sequence. The decompressor is
+      then always one dictionary entry behind the compressor, so it is possible,
+      if the compressor adds a new entry to the dictionary and then emits it as
+      the next code, for the decompressor to encounter a code that is not in its
+      dictionary.
+    </p>
+    
 
     <!-- TODO: Finish me -->
 
     <p style="font-size: 80%; margin-top: 1cm">
-      A copy of the slides from my in-class presentation can be found <a href="presentation.pdf">here</a>.
+      A copy of the slides from my in-class presentation on this material can be
+      found <a href="presentation.pdf">here</a>.
     </p>
   </div>
 </body>
