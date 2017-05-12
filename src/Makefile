@@ -1,20 +1,34 @@
+BIN_DIR=../bin
+OBJ_DIR=../obj
+
 CC = g++
 LANG = -std=c++11
 CFLAGS_ADDL = 
-CFLAGS = $(LANG) $(CFLAGS_ADDL) -Wall -Wextra -Werror -O3 -g3
-TESTS = $(wildcard UT_*.cpp)
-TEST_OBJS = $(patsubst %.cpp, %, $(TESTS))
+CFLAGS = $(LANG) $(CFLAGS_ADDL) -Wall -Wextra -Werror -O2 -g3
 
-all: tests lzw
+SOURCES=$(wildcard *.cpp)
+OBJS=$(patsubst tests/%.cpp, $(OBJ_DIR)/%, $(SOURCES))
 
-tests: $(TEST_OBJS)
+all: $(BIN_DIR)/lzw
 
-lzw: lzw.cpp utils.cpp trienode.cpp dictionaryentry.cpp bitseq.cpp \
-			compressor.cpp dictionary.cpp \
-			compressor_fixed.cpp compressor_fixed_static.cpp \
-			compressor_variable.cpp compressor_variable_static.cpp \
-			dictionary_static.cpp
+$(BIN_DIR)/lzw: $(OBJ_DIR)/lzw.o $(OBJ_DIR)/utils.o $(OBJ_DIR)/trienode.o \
+			$(OBJ_DIR)/dictionaryentry.o $(OBJ_DIR)/bitseq.o \
+			$(OBJ_DIR)/compressor.o $(OBJ_DIR)/dictionary.o \
+			$(OBJ_DIR)/dictionary_static.o \
+			$(OBJ_DIR)/compressor_fixed.o \
+			$(OBJ_DIR)/compressor_fixed_static.o \
+			$(OBJ_DIR)/compressor_variable.o \
+			$(OBJ_DIR)/compressor_variable_static.o \
+			| $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
+$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(BIN_DIR):
+	mkdir -p $@
+$(OBJ_DIR):
+	mkdir -p $@
+
 clean::
-	rm -f lzw $(TEST_OBJS)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)

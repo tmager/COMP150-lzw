@@ -1,7 +1,11 @@
 #include "dictionary_static.hpp"
 
-TrieNode *Dictionary_Static::nextToReplace(TrieNode *n) {
-    (void)n;
+Dictionary_Static::~Dictionary_Static() { }
+
+TrieNode *Dictionary_Static::nextToReplace() {
+    return nullptr;
+}
+TrieNode *Dictionary_Static::nextToReplaceUpdate() {
     return nullptr;
 }
 

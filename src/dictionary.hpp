@@ -18,10 +18,12 @@ public:
     Dictionary();
     void initialize();
 
+    virtual ~Dictionary() { };
+
     uint64_t size();
 
     uint64_t getCodeLocal(uint8_t sym);
-    DictionaryEntry getSymbols(uint64_t code);
+    DictionaryEntry getSymbols(uint64_t code, uint64_t w);
     uint64_t getEOF();
     uint64_t insertLocal(uint8_t sym, uint64_t w);
     uint64_t insertLocalLastSymbol(uint8_t sym, uint64_t w);
@@ -31,7 +33,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, Dictionary &d);
 
-private:
+protected:
     uint64_t elts;
     uint64_t nextFree;
 
@@ -49,7 +51,8 @@ private:
      * pointer to the leaf node that will be removed by the next replace
      * operation, or nullptr to indicate that no code should be replaced and the
      * insertion should be ignored. Passed the root node initially. */
-    virtual TrieNode *nextToReplace(TrieNode *n) = 0;
+    virtual TrieNode *nextToReplace() = 0;
+    virtual TrieNode *nextToReplaceUpdate() = 0;
 
     /* Helper to define replacement policy. Called on each node every time it is
      * accessed. */

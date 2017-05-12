@@ -2,6 +2,9 @@
 
 #include "dictionary.hpp"
 
+#ifndef __COMPRESSOR_VARIABLE_HPP__
+#define __COMPRESSOR_VARIABLE_HPP__
+
 class Compressor_Variable : public Compressor {
 public:
     Compressor_Variable(std::string infname,
@@ -20,3 +23,6 @@ protected:
     void _extract(BitSeq &input, std::vector<uint8_t> &output,
                   Dictionary *dict);
 };
+
+
+#endif /* __COMPRESSOR_VARIABLE_HPP__ */

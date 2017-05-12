@@ -21,6 +21,7 @@ void Dictionary::initialize() {
     eof_code = nextFree++;
     // Add a space for the EOF code in the code dictionary
     codeDict.push_back(nullptr);
+    elts++;
 
     resetLocal();
 }
@@ -40,8 +41,10 @@ uint64_t Dictionary::getCodeLocal(uint8_t sym) {
     }
 }
 
-DictionaryEntry Dictionary::getSymbols(uint64_t code) {
-    if (code >= codeDict.size()) {
+DictionaryEntry Dictionary::getSymbols(uint64_t code, uint64_t w) {
+    if (code >= codeDict.size()
+            || (nextFree >> w != 0 && nextToReplace() != nullptr
+                && code == nextToReplace()->getCode())) {
         return { NOT_FOUND, std::vector<uint8_t>() };
     }
 
@@ -57,6 +60,7 @@ DictionaryEntry Dictionary::getSymbols(uint64_t code) {
         current = n;
         std::vector<uint8_t> syms;
         while (n->getParent() != nullptr) {
+            updateAccessed(n);
             syms.push_back(n->getSymbol());
             n = n->getParent();
         }
@@ -73,7 +77,7 @@ uint64_t Dictionary::insertLocal(uint8_t sym, uint64_t w) {
     if ((nextFree >> w) == 0) {
         code = nextFree++;
     } else {
-        TrieNode *toReplace = nextToReplace(&symDict);
+        TrieNode *toReplace = nextToReplaceUpdate();
         if (toReplace == nullptr) {
             return DICT_NOINSERT;
         }
@@ -107,6 +111,7 @@ uint64_t Dictionary::insert(std::vector<uint8_t> syms, uint64_t w) {
             throw std::runtime_error
                             ("Attempted to insert orphan symbol sequence");
         }
+        updateAccessed(current);
     }
     return insertLocal(syms.front(), w);
 }
@@ -121,14 +126,43 @@ void Dictionary::insertLocal_raw(uint8_t sym, uint64_t code) {
         codeDict.at(code) = n;
     }
     elts++;
+#ifdef DEBUG_DICT
+    TrieNode *m = n;
+    std::vector<uint8_t> cs;
+    while (m->getParent() != nullptr) {
+        cs.push_back(m->getSymbol());
+        m = m->getParent();
+    }
+    std::cout << "Inserting leaf " << toStringReverse(cs) << std::endl;
+#endif
 }
 
 void Dictionary::removeLeaf(TrieNode *n) {
+#ifdef DEBUG_DICT
+    TrieNode *m = n;
+    std::vector<uint8_t> cs;
+    while (m->getParent() != nullptr) {
+        cs.push_back(m->getSymbol());
+        m = m->getParent();
+    }
+    std::cout << "Removing leaf " << toStringReverse(cs) << std::endl;
+#endif
+    if (current == n) {
+        std::cerr << "Current at leaf, moving\n";
+        current = n->getParent();
+    }
+    if (getSymLast == n) {
+        std::cerr << "gSL at leaf, moving\n";
+        getSymLast = n->getParent();
+    }
+    codeDict.at(n->getCode()) = nullptr;
     n->getParent()->removeChild(n->getSymbol());
 }
 
 
 std::ostream &operator<<(std::ostream &os, Dictionary &d) {
+    TrieNode *_current = d.current;
+    TrieNode *_gSM = d.getSymLast;
     for (uint64_t i = 0; i < d.codeDict.size(); i++) {
         if (d.codeDict.at(i) == nullptr) {
             if (i == d.eof_code) {
@@ -136,8 +170,10 @@ std::ostream &operator<<(std::ostream &os, Dictionary &d) {
             }
         } else {
             os << std::hex << i << std::dec <<
-                " : " << toStringReverse(d.getSymbols(i).entry) << std::endl;
+                " : " << toStringReverse(d.getSymbols(i,63).entry) << std::endl;
         }
     }
+    d.current = _current;
+    d.getSymLast = _gSM;
     return os;
 }

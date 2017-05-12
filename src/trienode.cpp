@@ -1,5 +1,7 @@
 #include "trienode.hpp"
 
+#include <iostream>
+
 TrieNode::TrieNode(uint8_t _sym, uint64_t _code,
                    uint64_t _data, TrieNode *_parent)
     : sym(_sym), code(_code), data(_data), parent(_parent)
@@ -55,10 +57,18 @@ void TrieNode::setData(uint64_t _data) {
 }
 
 void TrieNode::addChild(TrieNode *child) {
+    if (child == nullptr) {
+        throw std::runtime_error ("Inserting null child");
+    }
+    if (children[child->getSymbol()] != nullptr) {
+        throw std::runtime_error ("Replacing existing child");
+    }
+    nchildren++;
     children[child->getSymbol()] = child;
 }
 
 void TrieNode::removeChild(uint8_t childsym) {
     delete children[childsym];
     children[childsym] = nullptr;
+    nchildren--;
 }

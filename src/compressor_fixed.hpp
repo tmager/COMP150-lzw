@@ -4,6 +4,9 @@
 
 #include "dictionary.hpp"
 
+#ifndef __COMPRESSOR_FIXED_HPP__
+#define __COMPRESSOR_FIXED_HPP__
+
 class Compressor_Fixed : public Compressor {
 public:
     Compressor_Fixed(std::string infname,
@@ -22,3 +25,6 @@ protected:
     void _extract(BitSeq &input, std::vector<uint8_t> &output,
                   Dictionary *dict);
 };
+
+
+#endif /* __COMPRESSOR_FIXED_HPP__ */

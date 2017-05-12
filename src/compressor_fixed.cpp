@@ -100,7 +100,7 @@ void Compressor_Fixed::_extract(BitSeq &input,
 #endif
         decodePos += symwidth;
 
-        DictionaryEntry entry = dict->getSymbols(code);
+        DictionaryEntry entry = dict->getSymbols(code, symwidth);
 
         switch (entry.type) {
         case DATA:

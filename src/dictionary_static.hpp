@@ -5,9 +5,10 @@
 
 class Dictionary_Static : public Dictionary {
 public:
-    Dictionary_Static() { /*initialize();*/ }
+    ~Dictionary_Static();
 private:
-    TrieNode *nextToReplace(TrieNode *n);
+    TrieNode *nextToReplace();
+    TrieNode *nextToReplaceUpdate();
     void updateAccessed(TrieNode *n);
 };
 

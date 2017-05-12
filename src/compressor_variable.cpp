@@ -103,7 +103,7 @@ void Compressor_Variable::_extract(BitSeq &input,
 #endif
         decodePos += symwidth;
 
-        DictionaryEntry entry = dict->getSymbols(code);
+        DictionaryEntry entry = dict->getSymbols(code, maxSymwidth);
 
         switch (entry.type) {
         case DATA:
