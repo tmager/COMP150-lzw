@@ -35,13 +35,11 @@ newentries = Parallelize[#[[All, 7]] & /@ data];
 CRAgs      = Parallelize[MapThread[(#1/#2) &, {insizeAg, outsizeAg}]];
 
 
-(* ::Input:: *)
-(*CRs        = Parallelize[MapThread[(#1/#2) &, {insize, outsize}]];*)
-(*CRsSmooth = Parallelize[Smooth[#, CRSmoothing] & /@ CRs];*)
+CRs        = Parallelize[MapThread[(#1/#2) &, {insize, outsize}]];
+CRsSmooth = Parallelize[Smooth[#, CRSmoothing] & /@ CRs];
 
 
-(* ::Input:: *)
-(*dictEntryLengths = Parallelize[Select[# != 0 &] /@ newentries];*)
+dictEntryLengths = Parallelize[Select[# != 0 &] /@ newentries];
 
 
 (* ::Section:: *)
@@ -72,3 +70,16 @@ Show[
   LabelStyle->{12,GrayLevel[0]},
   ImageSize -> Large
 ]
+
+
+(* ::Subsection:: *)
+(*Dictionary Entry Length*)
+GraphicsGrid[
+  Partition[
+    MapThread[
+      Histogram[#1/8, PlotLabel -> #2,
+                LabelStyle -> {12,GrayLevel[0]},
+                PlotRange->{{0, Max[dictEntryLengths/8]}, {0, Length[#1]/2.8}}]&,
+      {dictEntryLengths, statsFiles}],
+    2],
+  ImageSize -> Large]

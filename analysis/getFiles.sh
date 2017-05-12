@@ -7,8 +7,8 @@ wget -nc https://www.gutenberg.org/files/2600/2600-0.txt &
 
 wait
 
-# De-UTF8 files and chop them down to 256k
+# De-UTF8 files and chop them down to 128k
 (cat 2600-0.txt | iconv -f utf-8 -t ascii//translit \
-        | tail -c 400000 | head -c 65536 > WarAndPeace.text) &
+        | tail -c 400000 | head -c 131072 > WarAndPeace.text) &
 
 wait

@@ -1,6 +1,6 @@
-lzw
-*.fs
-*.vs
+*.extr
+*.lzw
 *.st
 *.text
 2600-0.txt
+
