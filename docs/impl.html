@@ -41,12 +41,10 @@
       <h3>Compression Modes</h3>
     </a>
     <p>
-      The compressor has several compression modes, all of them variants on the
-      basic LZW algorithm. For the purposes of specifying which to use (see
-      notes on <a href="source.html#Options">running the compressor</a>), each
-      has an abbreviation, given in parentheses below.
-
-      <!-- TODO: when lru/rlr are ready, mark as working -->
+      The compressor has a couple of compression modes, variants on the basic
+      LZW algorithm. For the purposes of specifying which to use (see notes
+      on <a href="source.html#Options">running the compressor</a>), each has an
+      abbreviation, given in parentheses below.
 
       <ul>
         <li>
@@ -62,25 +60,29 @@
           just large enough to uniquely identify all entries in the dictionary,
           up to some maximum. Once the code width has reached this maximum and
           all codes of that width have been used, no new entries are added to
-          the dictionary.
+          the dictionary. This scheme provides improved compression as the
+          dictionary is being built up, but as it fills up the compression ratio
+          approaches that of the fixed-width scheme.
         </li>
-        <li>
-          <b>Variable code width, least-recently-used leaf replacement</b>
-          (<kbd>lru</kbd>): Operates the same way as variable code width, static
-          dictionary, but dictionary entries are replaced once the dictionary
-          fills up. The entry that is replaced is the leaf which has gone the
-          longest without being used. An entry is "used" whenever it is touched
-          by a search operation. <em>Not working yet</em>
-        </li>
-        <li>
-          <b>Variable code width, rotating leaf replacement</b>
-          (<kbd>rlr</kbd>): Works like least-recently-used replacement, but the
-          entry to be replaced is selected from the leaves by searching the trie
-          in order until it finds a leaf. The position that the search was at is
-          maintained between replacements, ensuring that nodes are replaced
-          throughout all of the leaves, not just the leaves near where the
-          search starts. <em>Not working yet</em>
-        </li>
+        <!-- There were going to exist, but due to time constraints and the need
+             to get this site ready they were abandoned. -->
+        <!-- <li> -->
+        <!--   <b>Variable code width, least-recently-used leaf replacement</b> -->
+        <!--   (<kbd>lru</kbd>): Operates the same way as variable code width, static -->
+        <!--   dictionary, but dictionary entries are replaced once the dictionary -->
+        <!--   fills up. The entry that is replaced is the leaf which has gone the -->
+        <!--   longest without being used. An entry is "used" whenever it is touched -->
+        <!--   by a search operation. <em>Not working yet</em> -->
+        <!-- </li> -->
+        <!-- <li> -->
+        <!--   <b>Variable code width, rotating leaf replacement</b> -->
+        <!--   (<kbd>rlr</kbd>): Works like least-recently-used replacement, but the -->
+        <!--   entry to be replaced is selected from the leaves by searching the trie -->
+        <!--   in order until it finds a leaf. The position that the search was at is -->
+        <!--   maintained between replacements, ensuring that nodes are replaced -->
+        <!--   throughout all of the leaves, not just the leaves near where the -->
+        <!--   search starts. <em>Not working yet</em> -->
+        <!-- </li> -->
       </ul>
     </p>
     

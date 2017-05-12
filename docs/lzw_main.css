@@ -19,6 +19,7 @@ body {
 
 .main {
     margin-left: var(--nav-width);
+    min-width: 600px;
     padding: 0px 28px;
 }
 
@@ -45,10 +46,8 @@ body {
 
 .grid {
     display: grid;
-    
+    margin-bottom: 24px;
     grid-gap: 10px;
-    background-color: #fff;
-    color: #444;
 }
 .grid > .left {
     grid-column: 1 / 1;
@@ -67,9 +66,15 @@ kbd {
     color: #AAAAAA;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 table.dict {
-    float: center;
-    width: 95%;
+    /* float: center; */
+    width: 250px;
     table-layout: fixed;
     border-collapse: collapse;
 }
