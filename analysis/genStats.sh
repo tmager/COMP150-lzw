@@ -3,7 +3,7 @@
 EXEC="../bin/lzw"
 
 MODES="fs vs"
-FILES="WarAndPeace.text"
+FILES="WarAndPeace.text numeric.dat random.dat"
 WIDTHS="12 14"
 
 rm -f *.st

@@ -1,4 +1,4 @@
-#!/usr/local/bin/mathematica -script
+#!/usr/bin/env mathematica
 
 (* ::Package:: *)
 
@@ -36,7 +36,7 @@ CRAgs      = Parallelize[MapThread[(#1/#2) &, {insizeAg, outsizeAg}]];
 
 
 CRs        = Parallelize[MapThread[(#1/#2) &, {insize, outsize}]];
-CRsSmooth = Parallelize[Smooth[#, CRSmoothing] & /@ CRs];
+CRsSmooth  = Parallelize[Smooth[#, CRSmoothing] & /@ CRs];
 
 
 dictEntryLengths = Parallelize[Select[# != 0 &] /@ newentries];
@@ -51,7 +51,8 @@ Show[
      Plot[Evaluate[y = 1], {x, 0, Max[insizeAg]},
           PlotStyle -> {Black}, PlotLegends -> {"Input File"}],
      ListLinePlot[Parallelize[MapThread[Transpose[{#1, #2}] &, {insizeAg, CRsSmooth}]],
-                  PlotLegends -> SwatchLegend[statsFiles]],
+                  PlotLegends -> SwatchLegend[statsFiles],
+                  PlotRange -> {{0,Max[insizeAg]}, {0,Max[CRsSmooth]}}],
      PlotRange -> {{0, Max[insizeAg]}, {0, Max[CRsSmooth]}},
      AxesLabel -> {"Position in file (bits)", "Compression Ratio"},
      LabelStyle -> {12,GrayLevel[0]},
@@ -64,7 +65,8 @@ Show[
 Show[
   Plot[Evaluate[y = 1], {x, 0, Max[insizeAg]}, PlotStyle -> {Black}, PlotLegends -> {"Input File"}],
   ListLinePlot[Parallelize[MapThread[Transpose[{#1, #2}] &, {insizeAg, CRAgs}]],
-               PlotLegends -> SwatchLegend[statsFiles]],
+               PlotLegends -> SwatchLegend[statsFiles],
+               PlotRange -> {{0,Max[insizeAg]}, {0,Max[CRAgs]}}],
   PlotRange -> {{0, Max[insizeAg]}, {0, Max[CRAgs]}},
   AxesLabel -> {"Position in file (bits)", "Compression Ratio"},
   LabelStyle->{12,GrayLevel[0]},
@@ -81,5 +83,5 @@ GraphicsGrid[
                 LabelStyle -> {12,GrayLevel[0]},
                 PlotRange->{{0, Max[dictEntryLengths/8]}, {0, Length[#1]/2.8}}]&,
       {dictEntryLengths, statsFiles}],
-    2],
-  ImageSize -> Large]
+    4],
+  ImageSize -> Full]
