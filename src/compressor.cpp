@@ -13,9 +13,11 @@ Compressor::Compressor(string infname, string outfname, string statsfname,
 {
     if (!infs.is_open()) {
         std::cerr << "Unable to open file '" << infname << "' for reading.\n";
+        exit(2);
     }
     if (!outfs.is_open()) {
         std::cerr << "Unable to open file '" << outfname << "' for writing.\n";
+        exit(2);
     }
 
     if (statsfname != "") {
@@ -24,6 +26,7 @@ Compressor::Compressor(string infname, string outfname, string statsfname,
         if (!statsfs.is_open()) {
             std::cerr << "Unable to open file '"
                       << statsfname << "' for writing.\n";
+            exit(2);
         }
 
         s_step = 0;
