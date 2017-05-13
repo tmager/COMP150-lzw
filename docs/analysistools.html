@@ -5,7 +5,7 @@
 <body>
   <div class="header">
     <h1><a href="index.html" class="inherit">LZW Compression</a></h1>
-    <h4>Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
+    <h4>Final Project: Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
   </div>
 
   <nav class="vertical">
@@ -23,6 +23,31 @@
 
   <div class="main">
     <h3>The <kbd>analysis.m</kbd> Script</h3>
-    <!-- TODO: Finish me -->
+
+    <p>
+      The <kbd>analysis.m</kbd> script, found in the <kbd>analysis</kbd>
+      directory, consumes the statistics files that the compressor outputs and
+      generates various plots based on them. Once opened, just evaluate the
+      entire notebook (for large files, or large numbers of files, this may take
+      a fairly long time). By default, the notebook will use all files in the
+      current directory with the <kbd>.st</kbd> extension, though specific files
+      can be selected by changing the value of <kbd>statsFiles</kbd> in the
+      Parameters section.
+    </p>
+
+    <h3>Test Data</h3>
+
+    <p>
+      The test data used to generate the <a href="results.html">Data &
+      Results</a> section can be obtained (on Linux) by running
+      the <kbd>getFiles.sh</kbd> script. This downloads a collection of test
+      files with various types of data (e.g. English text), and cuts each down
+      to 128KiB for comparison. Once this has been done,
+      the <kbd>genStats.sh</kbd> script can be run to compress these files and
+      generate statistics for various configurations of the compressor; what
+      these configurations are can be specified in a straightforward way by
+      modifying the script. The <kbd>genStats.sh</kbd> script also checks that
+      the extracted file is identical to the original, and reports if it is not.
+    </p>
   </div>
 </body>
