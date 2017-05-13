@@ -92,7 +92,7 @@
 
       The operation of the compressor will be on the left, and the decompressor
       on the right. The first line is the input, the next the output, and the
-      table shows the current state of the dictionary.
+      table shows the state of the dictionary at the end of the step.
     </p>
     
     <div class="grid">
@@ -379,7 +379,295 @@
       </div>
     </div>
 
-      
+    <p>
+      Skipping ahead a few steps, as they work like the ones before...
+    </p>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYY</span>YYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>012150427111<span class="dim">9183</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">YYY</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">012150427111</span>9183</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYY<span class="dim">YYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">YYY</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYYYYY</span>XYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>01215042711191<span class="dim">83</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">01215042711191</span>83</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYYYYY<span class="dim">XYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>012150427111918<span class="dim">3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">012150427111918</span>3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYYYYYXYZY<span class="dim"></span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>0121504271119183<span class="dim"></span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">0121504271119183</span></b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYYYYYXYZY<span class="dim"></span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>XYZY</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>YY</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>YYY</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>5</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>ZYX</td> <td>6</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+          <tr>
+            <td>XYZ</td> <td>7</td> <td class="dim"></td><td class="dim"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
     <h3>LZW</h3>
 
     <p>
@@ -394,14 +682,612 @@
       then always one dictionary entry behind the compressor, so it is possible,
       if the compressor adds a new entry to the dictionary and then emits it as
       the next code, for the decompressor to encounter a code that is not in its
-      dictionary.
+      dictionary. That particular case, the compressor knows that the unknown
+      entry must begin with the character sequence that it just received. The
+      last character of the new entry, then, must be the same as the first,
+      because when the compressor added this code, the character after the known
+      code would be the beginning of the current character sequence.
     </p>
 
     <h4>An Example</h4>
     
+    <p>
+      Consider compressing the same example as was used for LZ78 using LZW. Take
+      note of the fact that, unlike above, the compressor has one extra entry in
+      the dictionary compared to the decompressor:
+    </p>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim"></span>XYZYZYXXYZXYZYYYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b><span class="dim">01251042A1DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td class="dim">XY</td> <td class="dim">4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td class="dim">YZ</td> <td class="dim">5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim"></span>01251042A1DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td class="dim">XY</td> <td class="dim">4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td class="dim">YZ</td> <td class="dim">5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">X</span>YZYZYXXYZXYZYYYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>0<span class="dim">1251042A1DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td class="dim">YZ</td> <td class="dim">5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">0</span>1251042A1DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>X<span class="dim">YZYZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td class="dim">XY</td> <td class="dim">4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td class="dim">YZ</td> <td class="dim">5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XY</span>ZYZYXXYZXYZYYYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>01<span class="dim">251042A1DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">01</span>251042A1DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XY<span class="dim">ZYZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td class="dim">YZ</td> <td class="dim">5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZ</span>YZYXXYZXYZYYYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>012<span class="dim">51042A1DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">012</span>51042A1DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZ<span class="dim">YZYXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td class="dim">ZY</td> <td class="dim">6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZ</span>YXXYZXYZYYYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>0125<span class="dim">1042A1DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">0125</span>1042A1DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZ<span class="dim">YXXYZXYZYYYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td class="dim">YX</td> <td class="dim">8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td class="dim">XX</td> <td class="dim">9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td class="dim">XYZ</td> <td class="dim">A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td class="dim">ZX</td> <td class="dim">B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td class="dim">XYZY</td> <td class="dim">C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td class="dim">YZY</td> <td class="dim">7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p>
+      Again skipping ahead, now to an instance of the special case where the
+      decompressor encounters a code not yet in its dictionary:
+    </p>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZY</span>YYYYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>01251042A1<span class="dim">DEC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td>YY</td> <td>D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">01251042A1</span>DEC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZY<span class="dim">YYYYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td class="dim">YY</td> <td class="dim">D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYY</span>YYYXYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>01251042A1D<span class="dim">EC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td>YY</td> <td>D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td>YYY</td> <td>E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">01251042A1D</span>EC3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYY<span class="dim">YYYXYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td>YY</td> <td>D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td class="dim">YYY</td> <td class="dim">E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="left center">
+        <div class="center">
+          <kbd><b><span class="dim">XYZYZYXXYZXYZYYYYYY</span>XYZY</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>01251042A1D<span class="dim">EC3</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td>YY</td> <td>D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td>YYY</td> <td>E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td>YYYX</td> <td>F</td>
+          </tr>
+        </table>
+      </div>
+      <div class="right">
+        <div class="center">
+          <kbd><b><span class="dim">01251042A1DE</span>C3</b></kbd>
+        </div>
+        <div class="center">
+          <kbd><b>XYZYZYXXYZXYZYYYYYY<span class="dim">XYZY</span></b></kbd>
+        </div>
+        <table class="dict center">
+          <tr>
+            <td>X</td> <td>0</td> <td>YX</td> <td>8</td>
+          </tr>
+          <tr>
+            <td>Y</td> <td>1</td>  <td>XX</td> <td>9</td>
+          </tr>
+          <tr>
+            <td>Z</td> <td>2</td>  <td>XYZ</td> <td>A</td>
+          </tr>
+          <tr>
+            <td>[EOF]</td> <td>3</td> <td>ZX</td> <td>B</td>
+          </tr>
+          <tr>
+            <td>XY</td> <td>4</td> <td>XYZY</td> <td>C</td>
+          </tr>
+          <tr>
+            <td>YZ</td> <td>5</td> <td>YY</td> <td>D</td>
+          </tr>
+          <tr>
+            <td>ZY</td> <td>6</td> <td>YYY</td> <td>E</td>
+          </tr>
+          <tr>
+            <td>YZY</td> <td>7</td> <td class="dim">YYYX</td> <td class="dim">F</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <p>
+      and so on. In this case LZW only saves a couple of codes as compared to
+      LZ78, but then the message being encoded is extremely short, and the
+      dictionary is extremely small. For larger inputs, LZW improves on LZ78 in
+      two ways. First, it fills the dictionary up faster, which can improve the
+      compression ratio initially because having more entries in the dictionary
+      means more, longer character sequences that can be represented by a single
+      code. Second, there is no requirement that every other code represent a
+      single character, which hurts the compression ratio because a code for a
+      single character in the output is longer than the usual single-byte
+      representation of that character because of the need to distinguish it
+      from codes representing multiple characters.
+    </p>
 
     <!-- TODO: Finish me -->
 
+    <hr>
+    
     <p style="font-size: 80%; margin-top: 1cm">
       A copy of the slides from my in-class presentation on this material can be
       found <a href="presentation.pdf">here</a>.
