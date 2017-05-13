@@ -5,7 +5,7 @@
 <body>
   <div class="header">
     <h1><a href="index.html" class="inherit">LZW Compression</a></h1>
-    <h4>Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
+    <h4>Final Project: Tufts University COMP150 - Special Topics Data Structures and Algorithms</h4>
   </div>
   
   <nav class="vertical">
@@ -22,11 +22,63 @@
   </nav>
 
   <div class="main">
-    <h3></h3>
+    <h3>Compression Ratios</h3>
 
     <p>
-      
+      Below are plots of the compression ratios obtained for three test inputs:
+      ASCII-encoded English text (taken from <i>War and Peace</i> by Leo
+      Tolstoy), numerical data from a CSV file (taken from the statistics file
+      from the compressor), and random data (from <kbd>/dev/urandom</kbd>). In
+      each case, the top graph shows the moving average of the compression
+      ratios for the past 1024 codes emitted, and the bottom the total
+      compression ratio for the portion of the file processed so far.
     </p>
+
+    <h4>English Text:</h4>
+
+    <p>
+      English text compresses fairly well, achieving an overall compression
+      ratio of about 2 with this compressor. Looking at the lower plot, a couple
+      of trends are evident. First, in the long run the fixed- and
+      variable-code-width modes converge to roughly the same compression ratio
+      in the long run, as would be expected because they behave the same way
+      once the dictionary is full. Also, for fixed-width codes, smaller
+      dictionaries give better compression initially, but at the cost of
+      improvement in compression ratio later. This, again, is to be expected
+      because the codes take up less space, but fewer character sequences can be
+      represented. 
+    </p>
+
+    <img src="text_CRsSmooth.svg" style="width: 750px; padding-bottom: 16px"><br>
+    <img src="text_CRAgs.svg" style="width: 750px; padding-bottom: 24px">
+
+    <h4>ASCII-Encoded Numbers:</h4>
+
+    <p>
+      Numerical data in this format, and particularly data from the source used
+      here because each line is usually similar to the one before, compresses
+      quite well. It contains very few distinct characters, so the dictionary
+      can accumulate very lengthy character sequences. However, a weakness of
+      the compression scheme being used is evident: once the dictionary fills
+      up, if the pattern of the data changes, the compression ratio can suddenly
+      drop and not go back up. This is evident starting at around the 900,000th
+      bit of the input file. This type of weakness could be partially avoided by
+      replacing old dictionary entries once the dictionary fills up.
+    </p>
+
+    <img src="numeric_CRsSmooth.svg" style="width: 750px; padding-bottom: 16px"><br>
+    <img src="numeric_CRAgs.svg" style="width: 750px;  padding-bottom: 24px">
+
+    <h4>Random Data:</h4>
+    
+    <p>
+      As seen below, and as would be expected, the randomly-generated data does
+      not compress at all, but rather gets larger. All of the compression
+      settings perform roughly equally poorly, because there are no patterns to
+      be exploited to reduce the file size.
+    </p>
+    <img src="random_CRsSmooth.svg" style="width: 750px; padding-bottom: 16px"><br>
+    <img src="random_CRAgs.svg" style="width: 750px; padding-bottom: 24px">
   </div>
 
 </body>
